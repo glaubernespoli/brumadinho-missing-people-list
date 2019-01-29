@@ -24,10 +24,12 @@ repositories {
 
 ext {
 	jsoupVersion = '1.11.3'
+	opencsvVersion = '4.4'
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation "org.springframework.boot:spring-boot-starter"
 	implementation "org.jsoup:jsoup:${jsoupVersion}"
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation "com.opencsv:opencsv:${opencsvVersion}"
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
