@@ -25,6 +25,8 @@ public class LocationApplication {
 					.stream()
 					.map(Element::html)
 					.forEach(o -> writer.writeNext(new String[]{o}));
+
+			System.out.println("File created at " + path.toAbsolutePath());
 		}
 	}
 
@@ -33,4 +35,3 @@ public class LocationApplication {
 	}
 
 }
-
