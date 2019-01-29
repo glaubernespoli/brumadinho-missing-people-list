@@ -3,6 +3,7 @@ package dam.brumadinho.location;
 import com.opencsv.CSVWriter;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.FileWriter;
@@ -16,14 +17,20 @@ public class LocationApplication {
 
 	private static final String CSV_PATH = "out/missing-people.csv";
 
+	private static final String LAST_UPDATE_CRITERIA = "Última atualização em";
+
 	public static void main(String[] args) throws IOException {
 		Path path = getPath();
 		try(CSVWriter writer = new CSVWriter(new FileWriter(path.toString()))) {
-			Jsoup.connect(MISSING_PEOPLE_URL)
-					.get()
+			final Document doc = Jsoup.connect(MISSING_PEOPLE_URL).get();
+			writer.writeNext(new String[]{ doc.getElementsMatchingOwnText(LAST_UPDATE_CRITERIA).text() });
+
+			writer.writeNext(new String[]{});
+
+			doc
 					.select("li")
 					.stream()
-					.map(Element::html)
+					.map(Element::text)
 					.forEach(o -> writer.writeNext(new String[]{o}));
 
 			System.out.println("File created at " + path.toAbsolutePath());
